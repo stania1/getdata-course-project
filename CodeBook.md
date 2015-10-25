@@ -27,7 +27,7 @@ After this step, each record in the training data set will have:
 
 1. `activity`: the activity the subject was performing when measurements were taken
 2. `subject_id`: identifies the subject of the measurement. The study was performed on 30 people, identified by numbers 1 to 30.
-3. measurements: there are 2 variables for each signal (listed below) - mean and std (standard deviation). The mean and std have been averaged for the same activity and subject id combination.
+3. measurements: there are 2 variables for each signal (listed below) - mean and std (standard deviation). The mean and std have been averaged for the each subject-activity combination.
 
 	Signals:
 	- tBodyAcc-XYZ
@@ -47,5 +47,16 @@ After this step, each record in the training data set will have:
 	- fBodyAccJerkMag
 	- fBodyGyroMag
 	- fBodyGyroJerkMag
+	
+	
+	There are also additional vectors (listed below), averaged for every subject-activity combination.
+	
+	Additional vectors:
+	- gravityMean
+	- tBodyAccMean
+	- tBodyAccJerkMean
+	- tBodyGyroMean
+	- tBodyGyroJerkMean
+
 
 
