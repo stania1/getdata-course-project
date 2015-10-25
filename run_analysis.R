@@ -50,15 +50,9 @@ step2 <- function() {
 
 step3 <- function() {
   selected_data <- step2()
-  # use basic subsetting instead of merge
-  selected_data$activity_id[selected_data$activity_id == 1] <- 'WALKING'
-  selected_data$activity_id[selected_data$activity_id == 2] <- 'WALKING_UPSTAIRS'
-  selected_data$activity_id[selected_data$activity_id == 3] <- 'WALKING_DOWNSTAIRS'
-  selected_data$activity_id[selected_data$activity_id == 4] <- 'SITTING'
-  selected_data$activity_id[selected_data$activity_id == 5] <- 'STANDING'
-  selected_data$activity_id[selected_data$activity_id == 6] <- 'LAYING'
+  with_activity_labels <- merge(activity_labels(), selected_data, by.x = 'id', by.y = 'activity_id')
   
-  selected_data
+  select(with_activity_labels, -id)
 }
 
 step4 <- function() {
@@ -68,7 +62,11 @@ step4 <- function() {
 step5 <- function() {
   mean_std_with_activity_label <- tbl_df(step4())
   mean_std_with_activity_label <- mean_std_with_activity_label %>%
-    arrange(activity_id, subject_id) %>%
-    group_by(activity_id, subject_id) %>%
+    arrange(activity, subject_id) %>%
+    group_by(activity, subject_id) %>%
     summarise_each(funs(mean))
+}
+
+write_step5_results <- function() {
+  write.table(step5(), row.names = FALSE, file = "step5.txt")
 }
