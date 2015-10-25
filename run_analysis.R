@@ -50,10 +50,25 @@ step2 <- function() {
 
 step3 <- function() {
   selected_data <- step2()
-  with_activity_label <- merge(activity_labels(), selected_data, by.x = 'id', by.y = 'activity_id')
-  with_activity_label <- select(with_activity_label, -id)
+  # use basic subsetting instead of merge
+  selected_data$activity_id[selected_data$activity_id == 1] <- 'WALKING'
+  selected_data$activity_id[selected_data$activity_id == 2] <- 'WALKING_UPSTAIRS'
+  selected_data$activity_id[selected_data$activity_id == 3] <- 'WALKING_DOWNSTAIRS'
+  selected_data$activity_id[selected_data$activity_id == 4] <- 'SITTING'
+  selected_data$activity_id[selected_data$activity_id == 5] <- 'STANDING'
+  selected_data$activity_id[selected_data$activity_id == 6] <- 'LAYING'
+  
+  selected_data
 }
 
 step4 <- function() {
   step3() # no-op, already done in step 1
+}
+
+step5 <- function() {
+  mean_std_with_activity_label <- tbl_df(step4())
+  mean_std_with_activity_label <- mean_std_with_activity_label %>%
+    arrange(activity_id, subject_id) %>%
+    group_by(activity_id, subject_id) %>%
+    summarise_each(funs(mean))
 }
