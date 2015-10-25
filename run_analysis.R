@@ -1,6 +1,9 @@
+library(dplyr)
+
 column_names <- function() {
   features <- read.table('features.txt')
-  as.vector(features$V2)
+  c <- as.vector(features$V2)
+  make.names(c, unique = TRUE)
 }
 
 test_data <- function() {
@@ -31,4 +34,10 @@ train_data <- function() {
 
 step1 <- function() {
   data <- rbind(test_data(), train_data())
+  tbl_df(data)
+}
+
+step2 <- function() {
+  merged_data <- step1()
+  select(merged_data, subject, activity, contains("mean"), contains("std"), -contains("meanFreq"))
 }
