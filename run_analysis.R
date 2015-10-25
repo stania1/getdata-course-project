@@ -53,3 +53,7 @@ step3 <- function() {
   with_activity_label <- merge(activity_labels(), selected_data, by.x = 'id', by.y = 'activity_id')
   with_activity_label <- select(with_activity_label, -id)
 }
+
+step4 <- function() {
+  step3() # no-op, already done in step 1
+}
